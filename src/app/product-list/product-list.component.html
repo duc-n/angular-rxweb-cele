@@ -33,7 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr [formGroup]="product" *ngFor="let product of userForm.controls.products.controls;let i = index;">
+      <tr [formGroup]="product" *ngFor="let product of userForm.get('products')['controls'];let i = index;">
 
         <td>
           <div class="form-group">

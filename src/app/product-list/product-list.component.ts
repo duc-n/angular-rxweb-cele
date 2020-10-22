@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
-import { RxFormBuilder } from "@rxweb/reactive-form-validators";
-import { products } from "../products";
-import { user } from "../user";
+import { FormArray } from "@angular/forms";
+import { RxFormBuilder, RxFormGroup } from "@rxweb/reactive-form-validators";
+import { userJson } from "../user";
 import { User } from "../models/user";
 import { Product } from "../models/product";
 import { Address } from "../models/address";
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: "app-product-list",
@@ -13,12 +13,10 @@ import { Address } from "../models/address";
   styleUrls: ["./product-list.component.css"]
 })
 export class ProductListComponent implements OnInit {
-  userForm: FormGroup;
-
-  products = products;
+  userForm: RxFormGroup;
   user: User;
 
-  constructor(private formBuilder: RxFormBuilder) {}
+  constructor(private formBuilder: RxFormBuilder) { }
 
   ngOnInit(): void {
     const addressData = {
@@ -58,19 +56,22 @@ export class ProductListComponent implements OnInit {
       products: products
     };
 
-    // mock user service
-    //this.user = user;
-
     this.user = new User(userData);
 
-    this.userForm = this.formBuilder.formGroup(User, this.user);
+    // mock user service
+    //this.user = plainToClass(User, userJson);
 
+    console.log("User Value: ", this.user);
+    this.userForm = this.formBuilder.formGroup(this.user) as RxFormGroup;
+
+    //this.userForm.patchModelValue(this.user);
     console.log("UserForm Value: ", this.userForm.value);
   }
 
   addProduct() {
     const products = this.userForm.controls.products as FormArray;
     products.push(this.formBuilder.formGroup(Product));
+
   }
 
   removeProduct(index: number) {

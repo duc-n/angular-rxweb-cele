@@ -1,4 +1,4 @@
-export const user = {
+export const userJson = {
   name: "Totoro",
   middleName: null,
   address: {

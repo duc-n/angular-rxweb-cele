@@ -7,7 +7,6 @@ import { ReactiveFormConfig } from "@rxweb/reactive-form-validators";
 })
 export class AppComponent {
   constructor() {
-    ReactiveFormConfig.autoInstancePush = true;
     ReactiveFormConfig.set({
       validationMessage: {
         required: "This field is required.",

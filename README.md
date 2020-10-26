@@ -10,6 +10,7 @@ ng update @angular/cli @angular/core --allow-dirty --force
 
 # Setup class-transformer : 
 ## **this dependency helps to create a class instance from a json object**
+- npm install @rxweb/reactive-form-validators
 - npm install class-transformer --save
 - npm install reflect-metadata --save
 

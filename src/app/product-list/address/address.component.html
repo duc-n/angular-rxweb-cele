@@ -1,0 +1,9 @@
+<form [formGroup]="addressForm">
+  <p-accordionTab header="Address" [selected]="true">
+    <h5>Address</h5>
+    <input type="text" pInputText formControlName="address">
+
+    <h5>Post Code</h5>
+    <input type="text" pInputText formControlName="postCode">
+  </p-accordionTab>
+</form>

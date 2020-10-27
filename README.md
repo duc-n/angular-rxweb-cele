@@ -53,3 +53,15 @@ export class AppComponent {
 
 ReactiveFormConfig.autoInstancePush = true
 
+# Install primeng :
+- npm install primeng --save
+- npm install primeicons --save
+- npm install @angular/cdk --save
+  
+1. Open the angular.json and add the following in the styles section
+```js
+"./node_modules/primeicons/primeicons.css",
+"./node_modules/primeng/resources/themes/nova-light/theme.css",
+"./node_modules/primeng/resources/primeng.min.css",
+```
+

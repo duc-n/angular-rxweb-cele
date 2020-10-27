@@ -27,13 +27,13 @@ export class ProductListComponent implements OnInit {
 
     const product1 = {
       name: "Phone XL",
-      price: 799,
+      price: 1799,
       description: "A large phone with one of the best screens"
     };
 
     const product2 = {
       name: "Phone Mini",
-      price: 699,
+      price: 1699,
       description: "A great phone with one of the best cameras"
     };
 
@@ -68,14 +68,11 @@ export class ProductListComponent implements OnInit {
     console.log("UserForm Value: ", this.userForm.value);
   }
 
-  addProduct() {
-    const products = this.userForm.controls.products as FormArray;
-    products.push(this.formBuilder.formGroup(Product));
 
+  udpateProducts() {
+    console.log('Update product');
+    this.user = plainToClass(User, userJson);
+    this.userForm = this.formBuilder.formGroup(this.user) as RxFormGroup;
   }
 
-  removeProduct(index: number) {
-    const products = this.userForm.controls.products as FormArray;
-    products.removeAt(index);
-  }
 }

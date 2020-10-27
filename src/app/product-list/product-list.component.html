@@ -1,63 +1,20 @@
 <h2>User info</h2>
 
-<form [formGroup]="userForm" class="form form-horizontal form-custom" novalidate>
-  <div class="form-group">
-    <label>Name:</label>
-    <input type="text" formControlName="name" class="form-control" />
-    <small class="form-text text-danger" *ngIf="userForm.controls.name.errors">{{userForm.controls.name.errors.required.message}}<br /></small>
-  </div>
+<form [formGroup]="userForm" novalidate>
 
-  <div class="form-group">
-    <label>MiddleName:</label>
-    <input type="text" formControlName="middleName" class="form-control" />
-  </div>
-  <div [formGroup]="userForm.controls.address">
+  <p-accordion>
+    <p-accordionTab header="User" [selected]="true">
+      <h5>Name:</h5>
+      <input type="text" pInputText formControlName="name">
+      <small class="form-text text-danger" *ngIf="userForm.controls.name.errors">{{userForm.controls.name.errors.required.message}}<br /></small>
 
-    <div class="form-group">
-      <label>Address:</label>
-      <input type="text" formControlName="address" class="form-control" />
-    </div>
-    <div class="form-group">
-      <label>PostCode:</label>
-      <input type="text" formControlName="postCode" class="form-control" />
-    </div>
-  </div>
-  <button class="btn btn-primary" (click)="addProduct()">Add Product</button>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Produc name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Description</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr [formGroup]="product" *ngFor="let product of userForm.get('products')['controls'];let i = index;">
+      <h5>Middle Name</h5>
+      <input id="float-input" type="text" pInputText formControlName="middleName">
+    </p-accordionTab>
 
-        <td>
-          <div class="form-group">
-            <input type="text" formControlName="name" class="form-control" />
-          </div>
-        </td>
-        <td>
-          <div class="form-group">
-            <input type="text" formControlName="price" class="form-control" />
-          </div>
-        </td>
-        <td>
-          <div class="form-group">
-            <input type="text" formControlName="description" class="form-control" />
-          </div>
-        </td>
-        <td>
-          <div class="form-group">
-            <button class="form-control btn btn-danger" (click)="removeProduct(i)">Remove</button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button [disabled]="!userForm.valid" class="btn btn-primary">Submit</button>
+    <app-address [addressForm]="userForm.controls['address']"></app-address>
 
+    <app-products [userForm]="userForm" (updateProducts)="udpateProducts()"></app-products>
+
+  </p-accordion>
 </form>

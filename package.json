@@ -17,6 +17,7 @@
     "class-transformer": "^0.3.1",
     "jasmine-core": "^3.6.0",
     "jasmine-marbles": "^0.6.0",
+    "ngx-logger": "^4.1.9",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.3",
     "reflect-metadata": "^0.1.13",

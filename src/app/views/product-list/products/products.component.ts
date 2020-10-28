@@ -1,8 +1,9 @@
-import { User } from './../../models/user';
-import { Product } from './../../models/product';
+import { Product } from './../../../shared/models/product';
+
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RxFormBuilder } from '@rxweb/reactive-form-validators';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-products',
@@ -18,11 +19,12 @@ export class ProductsComponent implements OnInit {
     return this.userForm.get('products') as FormArray;
   }
   constructor(
-    private formBuilder: RxFormBuilder
+    private formBuilder: RxFormBuilder,
+    private logger: NGXLogger,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.products);
+    this.logger.debug('ProductsComponent init');
   }
 
   addProduct() {

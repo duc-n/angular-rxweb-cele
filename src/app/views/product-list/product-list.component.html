@@ -1,0 +1,20 @@
+<h2>User info</h2>
+
+<form [formGroup]="userForm" novalidate>
+
+  <p-accordion>
+    <p-accordionTab header="User" [selected]="true">
+      <h5>Name:</h5>
+      <input type="text" pInputText formControlName="name">
+      <small class="form-text text-danger" *ngIf="userForm.controls.name.errors">{{userForm.controls.name.errors.required.message}}<br /></small>
+
+      <h5>Middle Name</h5>
+      <input id="float-input" type="text" pInputText formControlName="middleName">
+    </p-accordionTab>
+
+    <app-address [addressForm]="userForm.controls['address']"></app-address>
+
+    <app-products [userForm]="userForm" (updateProducts)="udpateProducts()"></app-products>
+
+  </p-accordion>
+</form>

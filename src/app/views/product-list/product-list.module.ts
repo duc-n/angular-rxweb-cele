@@ -1,10 +1,10 @@
+import { SharedComponentsModule } from './../../shared/components/shared-components.module';
 import { AccordionModule } from 'primeng/accordion';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import { AddressComponent } from './address/address.component';
 import { ProductListComponent } from './product-list.component';
 import { ProductsComponent } from './products/products.component';

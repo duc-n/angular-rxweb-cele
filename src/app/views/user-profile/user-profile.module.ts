@@ -1,4 +1,4 @@
-import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
+import { SharedComponentsModule } from './../../shared/components/shared-components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user-profile.component';

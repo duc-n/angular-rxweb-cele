@@ -13,6 +13,7 @@ ng update @angular/cli @angular/core --allow-dirty --force
 - npm install @rxweb/reactive-form-validators --save
 - npm install class-transformer --save
 - npm install reflect-metadata --save
+- npm install --save @wishtack/rx-scavenger
 
 ## Configuration :
 1. Add the RxReactiveFormsModule in app.module.ts

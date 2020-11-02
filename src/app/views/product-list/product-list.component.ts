@@ -1,24 +1,31 @@
+import { FormsService } from './../../shared/services/forms.service';
 import { Product } from './../../shared/models/product';
 import { User } from './../../shared/models/user';
 import { Address } from './../../shared/models/address';
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { RxFormBuilder, RxFormGroup } from "@rxweb/reactive-form-validators";
 import { userJson } from "../../user";
 import { NGXLogger } from 'ngx-logger';
 import { plainToClass } from 'class-transformer';
+import { Scavenger } from '@wishtack/rx-scavenger';
 
 @Component({
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.css"]
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
+  private _scavenger = new Scavenger(this);
+
   userForm: RxFormGroup;
   user: User;
 
+
   constructor(
     private logger: NGXLogger,
-    private formBuilder: RxFormBuilder) { }
+    private formBuilder: RxFormBuilder,
+    private formsService: FormsService) { }
+
 
   ngOnInit(): void {
 
@@ -73,6 +80,14 @@ export class ProductListComponent implements OnInit {
     //this.userForm.patchModelValue(this.user);
     this.logger.debug('ProductListComponent UserForm Value:', this.userForm.value);
 
+    this.formsService.getUserFormSubject().pipe(this._scavenger.collect()).subscribe(form => {
+      this.logger.debug('ProductListComponent - User Form Subject updated : ', form);
+    });
+
+    this.formsService.getUserFormBehaviorSubject().pipe(this._scavenger.collect()).subscribe(form => {
+      this.logger.debug('ProductListComponent - User Form BehaviorSubject updated : ', form);
+    });
+
   }
 
   udpateProducts() {
@@ -80,6 +95,14 @@ export class ProductListComponent implements OnInit {
 
     this.user = plainToClass(User, userJson);
     this.userForm = this.formBuilder.formGroup(this.user) as RxFormGroup;
+
+    //Share the userForm to other module
+    this.formsService.setUserFormSubject(this.userForm);
+    this.formsService.setUserFormBehaviorSubject(this.userForm);
+  }
+
+  ngOnDestroy(): void {
+    //rx-scavenger will implement to unsubcribe observables
   }
 
 }

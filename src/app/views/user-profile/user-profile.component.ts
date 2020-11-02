@@ -27,6 +27,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //rx-scavenger will implement to unsubcribe observables
+    //rx-scavenger will be injected here to unsubcribe observables
   }
 }

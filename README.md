@@ -65,3 +65,37 @@ ReactiveFormConfig.autoInstancePush = true
 "./node_modules/primeng/resources/primeng.min.css",
 ```
 
+# Measuring bundle sizes with Webpack bundle analyzer
+1. Install Webpack bundle analyzer:
+- npm i -g webpack-bundle-analyzer
+  
+2. To generate the result json file, run the command :
+- npm run build -- --prod --named-chunks --stats-json
+
+3. Use Webpack bundle analyzer as :
+- webpack-bundle-analyzer dist/stats.json
+- Open chrome and type : http://127.0.0.1:8888
+
+<img src="src/assets/webpackBundleAnalyzer.png">
+
+# Typescript - Javascript syntax :
+1. Operator ?? : return the first argument if it is not null/undefined, otherwise, it will return the second argument
+ - null ?? 5 // => 5
+ - 3 ?? 5 // => 3
+```js
+var currMoney = 0
+function moneyAmount(money) {
+  return money || `You currently do not own an account in the bank`
+}
+console.log(moneyAmount(currMoney)) // => `You currently do not own an account in the bank`
+
+Correction :
+var currMoney = 0
+var noAccount = null
+
+function moneyAmount(money) {
+  return money ?? `You currently do not own an account in the bank`
+}
+ moneyAmount(currMoney) // => 0
+ moneyAmount(noAccount) // => `You currently do not own an account in the bank`
+```

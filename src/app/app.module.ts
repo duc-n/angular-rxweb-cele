@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
-    SharedModule,
+    SharedModule.forRoot(), // shares services between lazy modules 
     AppRoutingModule,
     LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR }),
   ],

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ReactiveFormConfig } from "@rxweb/reactive-form-validators";
+import { environment } from '../environments/environment';
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -15,5 +16,6 @@ export class AppComponent {
         alpha: "you can only enter alphabets."
       }
     });
+
   }
 }

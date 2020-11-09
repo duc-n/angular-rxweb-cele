@@ -1,3 +1,4 @@
+import { UserService } from './../../shared/services/user.service';
 import { FormsService } from './../../shared/services/forms.service';
 import { Product } from './../../shared/models/product';
 import { User } from './../../shared/models/user';
@@ -24,7 +25,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(
     private logger: NGXLogger,
     private formBuilder: RxFormBuilder,
-    private formsService: FormsService) { }
+    private formsService: FormsService,
+    private userService: UserService) { }
 
 
   ngOnInit(): void {
@@ -63,6 +65,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     const address = new Address(addressData);
 
     const userData = {
+      id: "id02",
       name: "Totoro",
       address: address,
       products: products
@@ -88,6 +91,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.logger.debug('ProductListComponent - User Form BehaviorSubject updated : ', form);
     });
 
+    const userList = this.userService.list();
+
+    userList.subscribe(users => {
+      console.log(users);
+    });
+
   }
 
   udpateProducts() {
@@ -99,6 +108,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     //Share the userForm to other module
     this.formsService.setUserFormSubject(this.userForm);
     this.formsService.setUserFormBehaviorSubject(this.userForm);
+
+    this.userService.add(this.userForm.value);
   }
 
   ngOnDestroy(): void {

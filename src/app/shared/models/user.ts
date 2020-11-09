@@ -1,3 +1,4 @@
+import { IBaseEntity } from './iBaseEntity';
 import {
   propArray,
   propObject,
@@ -9,7 +10,11 @@ import { AbstractControl } from "@angular/forms";
 import { Address } from "./address";
 import { Product } from "./product";
 import { Type } from 'class-transformer/decorators';
-export class User {
+export class User implements IBaseEntity {
+
+  @prop()
+  id?: string;
+
   @required()
   name: string = null;
 

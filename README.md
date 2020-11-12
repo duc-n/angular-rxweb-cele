@@ -79,8 +79,12 @@ ReactiveFormConfig.autoInstancePush = true
 
 <img src="src/assets/webpackBundleAnalyzer.png">
 
+
+
 # Typescript - Javascript syntax :
-1. Operator ?? : return the first argument if it is not null/undefined, otherwise, it will return the second argument
+1. Application url test : https://stackblitz.com/edit/cele-rxjs?file=main.ts
+
+2. Operator ?? : return the first argument if it is not null/undefined, otherwise, it will return the second argument
  - null ?? 5 // => 5
  - 3 ?? 5 // => 3
 ```js
@@ -98,5 +102,47 @@ function moneyAmount(money) {
   return money ?? `You currently do not own an account in the bank`
 }
  moneyAmount(currMoney) // => 0
- moneyAmount(noAccount) // => `You currently do not own an account in the bank`
+ moneyAmount(noAccount) // => You currently do not own an account in the bank
+
+//forkJoin
+const getPostOne$ = timer(1000).pipe(mapTo({ id: 1 }));
+const getPostTwo$ = timer(2000).pipe(mapTo({ id: 2 }));
+
+forkJoin(getPostOne$, getPostTwo$).subscribe(res =>
+  console.log("forkJoin result", res)
+);
+
+// Simulate HTTP requests
+const getPost3$ = timer(3000).pipe(mapTo({ id: 1 }));
+const getPost4$ = timer(1000).pipe(mapTo({ id: 2 }));
+
+// concat(getPost3$, getPost4$).subscribe(res => console.log(res));
+
+// mergeMap
+const post$ = of({ id: 1 });
+const getPostInfo$ = timer(3000).pipe(mapTo({ title: "Post title" }));
+
+const posts$ = post$
+  .pipe(mergeMap(post => getPostInfo$))
+  .subscribe(res => console.log("mergeMap result :", res));
+
+// switchMap
+const clicks$ = fromEvent(document, "click");
+const innerObservable$ = interval(1000);
+
+clicks$
+.pipe(switchMap(event => innerObservable$))
+.subscribe(val => console.log(val));
+
+// Like mergeMap but when the source Observable emits cancel any previous
+// subscriptions of the inner Observable.
+
+//combineLatest
+const intervalOne$ = interval(1000);
+const intervalTwo$ = interval(2000);
+
+combineLatest(intervalOne$, intervalTwo$).subscribe(all =>
+console.log("combineLatest Result", all)
+);
+
 ```

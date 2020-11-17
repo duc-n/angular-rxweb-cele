@@ -79,7 +79,8 @@ ReactiveFormConfig.autoInstancePush = true
 
 <img src="src/assets/webpackBundleAnalyzer.png">
 
-
+# Add Firbase
+- npm install firebase @angular/fire --save 
 
 # Typescript - Javascript syntax :
 1. Application url test : https://stackblitz.com/edit/cele-rxjs?file=main.ts

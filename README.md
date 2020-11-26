@@ -82,17 +82,20 @@ ReactiveFormConfig.autoInstancePush = true
 # Add Firbase
 - npm install firebase @angular/fire --save 
 
-# Install NgRx Store and schematics :
-- npm install @ngrx/schematics --save-dev
-- npm install @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools --save
-- ng add @ngrx/schematics@latest
--  
-1. As stated in the official doc, use schematics for the default ng commands (angular.json will be modified):
-- ng add @ngrx/schematics@latest
+# Add Akita Schematics
+- ng add @datorama/akita
+# Add Schematics defaut collection 
+- Run this command in the app terminal : ng config cli.defaultCollection @datorama/akita
+- This command will add the following configuration in the angular.json file:
+```js
+ "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
+``` 
+# Create a user store :
+- ng g af user
+- or : ng g feature todos/todos
 
-2. Add AppStore : 
-- ng generate @ngrx/schematics:store State --root --module app.module.ts --project angular-rxweb-cele
-- ng generate @ngrx/schematics:effect App --root --module app.module.ts --project angular-rxweb-cele
 # Typescript - Javascript syntax :
 1. Application url test : https://stackblitz.com/edit/cele-rxjs?file=main.ts
 

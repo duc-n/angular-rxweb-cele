@@ -1,3 +1,6 @@
+import { UserQuery } from './../../state/user.query';
+import { UserFireStoreService } from './../../state/user.service';
+import { IUser } from './../../state/user.model';
 import { UserService } from './../../shared/services/user.service';
 import { FormsService } from './../../shared/services/forms.service';
 import { Product } from './../../shared/models/product';
@@ -9,6 +12,7 @@ import { userJson } from "../../user";
 import { NGXLogger } from 'ngx-logger';
 import { plainToClass } from 'class-transformer';
 import { Scavenger } from '@wishtack/rx-scavenger';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: "app-product-list",
@@ -17,21 +21,33 @@ import { Scavenger } from '@wishtack/rx-scavenger';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private _scavenger = new Scavenger(this);
-
+  private subscription: Subscription;
   userForm: RxFormGroup;
   user: User;
-
+  users$: Observable<IUser[]>;
 
   constructor(
     private logger: NGXLogger,
     private formBuilder: RxFormBuilder,
     private formsService: FormsService,
-    private userService: UserService) { }
-
+    private userService: UserService,
+    private userFireStoreService: UserFireStoreService,
+    private query: UserQuery
+  ) { }
 
   ngOnInit(): void {
 
     this.logger.debug('ProductListComponent init');
+
+    // Subscribe to the collection
+    this.subscription = this.userFireStoreService.syncCollection().subscribe();
+    // Get the list from the store
+    this.users$ = this.query.selectAll();
+
+    this.users$.subscribe(user => {
+      this.logger.debug("User in firebase : ", user)
+    });
+
 
     const addressData = {
       address: "Rue Blanchard",

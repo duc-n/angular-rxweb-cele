@@ -82,6 +82,17 @@ ReactiveFormConfig.autoInstancePush = true
 # Add Firbase
 - npm install firebase @angular/fire --save 
 
+# Install NgRx Store and schematics :
+- npm install @ngrx/schematics --save-dev
+- npm install @ngrx/store @ngrx/effects @ngrx/entity @ngrx/store-devtools --save
+- ng add @ngrx/schematics@latest
+-  
+1. As stated in the official doc, use schematics for the default ng commands (angular.json will be modified):
+- ng add @ngrx/schematics@latest
+
+2. Add AppStore : 
+- ng generate @ngrx/schematics:store State --root --module app.module.ts --project angular-rxweb-cele
+- ng generate @ngrx/schematics:effect App --root --module app.module.ts --project angular-rxweb-cele
 # Typescript - Javascript syntax :
 1. Application url test : https://stackblitz.com/edit/cele-rxjs?file=main.ts
 
@@ -145,5 +156,57 @@ const intervalTwo$ = interval(2000);
 combineLatest(intervalOne$, intervalTwo$).subscribe(all =>
 console.log("combineLatest Result", all)
 );
+
+function simulateHttp(val: any, delay:number) {
+    return Observable.of(val).delay(delay); // the stream only emits once and then they complete
+}
+
+const saveUser$ = simulateHttp(" user saved ", 1000);
+
+const httpResult$ = saveUser$.switchMap(sourceValue => {
+    console.log(sourceValue);
+    return simulateHttp(" data reloaded ", 2000);
+});
+
+function simulateFirebase(val: any, delay: number) {
+    return Observable.interval(delay).map(index => val + " " + index); // long-lived streams
+}
+
+firebase1$.subscribe(
+    console.log,
+    console.error,
+    () => console.log('firebase1$ completed')
+);
+
+const firebase1$ = simulateFirebase("FB-1 ", 5000);
+const firebase2$ = simulateFirebase("FB-2 ", 1000);
+
+const firebaseResult$ = firebase1$.switchMap(sourceValue => {
+  console.log("source value " + sourceValue);
+  return simulateFirebase("inner observable ", 1000)
+});
+
+firebaseResult$.subscribe(
+  console.log,
+  console.error,
+  () => console.log('completed firebaseResult$')
+);
+
+// => result:
+source value FB-1  0
+    inner observable  0
+    inner observable  1
+    inner observable  2
+    inner observable  3
+source value FB-1  1
+    inner observable  0
+    inner observable  1
+    inner observable  2
+    inner observable  3
+source value FB-1  2
+    inner observable  0
+    inner observable  1
+    inner observable  2
+...
 
 ```

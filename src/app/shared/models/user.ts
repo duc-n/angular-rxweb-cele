@@ -7,10 +7,20 @@ import {
   prop
 } from "@rxweb/reactive-form-validators";
 import { AbstractControl } from "@angular/forms";
-import { Address } from "./address";
-import { Product } from "./product";
+import { Address, IAddress } from "./address";
+import { IProduct, Product } from "./product";
 import { Type } from 'class-transformer/decorators';
-export class User implements IBaseEntity {
+
+
+export interface IUser extends IBaseEntity {
+  name?: string;
+  middleName?: string;
+  adress?: IAddress;
+  product?: IProduct[];
+}
+
+
+export class User implements IUser {
 
   @prop()
   id?: string;

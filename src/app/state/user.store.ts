@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IUser } from './user.model';
 import { EntityState, ActiveState, EntityStore, StoreConfig } from '@datorama/akita';
+import { IUser } from '../shared/models/user';
 
 export interface UserState extends EntityState<IUser, string>, ActiveState<string> { }
 

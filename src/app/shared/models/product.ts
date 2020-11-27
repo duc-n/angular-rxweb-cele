@@ -1,6 +1,12 @@
 import { unique, required, prop } from "@rxweb/reactive-form-validators";
-import { AbstractControl } from "@angular/forms";
-export class Product {
+
+export interface IProduct {
+  name: string;
+  price: number;
+  description?: string;
+}
+
+export class Product implements IProduct {
   @unique()
   name: string = null;
 

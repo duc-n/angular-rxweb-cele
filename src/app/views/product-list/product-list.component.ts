@@ -1,10 +1,9 @@
 import { UserQuery } from './../../state/user.query';
 import { UserFireStoreService } from './../../state/user.service';
-import { IUser } from './../../state/user.model';
 import { UserService } from './../../shared/services/user.service';
 import { FormsService } from './../../shared/services/forms.service';
 import { Product } from './../../shared/models/product';
-import { User } from './../../shared/models/user';
+import { IUser, User } from './../../shared/models/user';
 import { Address } from './../../shared/models/address';
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { RxFormBuilder, RxFormGroup } from "@rxweb/reactive-form-validators";
@@ -12,7 +11,7 @@ import { userJson } from "../../user";
 import { NGXLogger } from 'ngx-logger';
 import { plainToClass } from 'class-transformer';
 import { Scavenger } from '@wishtack/rx-scavenger';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-product-list",
@@ -21,7 +20,6 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private _scavenger = new Scavenger(this);
-  private subscription: Subscription;
   userForm: RxFormGroup;
   user: User;
   users$: Observable<IUser[]>;
@@ -40,14 +38,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.logger.debug('ProductListComponent init');
 
     // Subscribe to the collection
-    this.subscription = this.userFireStoreService.syncCollection().subscribe();
+    this.userFireStoreService.syncCollection().pipe(this._scavenger.collect()).subscribe();
     // Get the list from the store
     this.users$ = this.query.selectAll();
 
     this.users$.subscribe(user => {
       this.logger.debug("User in firebase : ", user)
     });
-
 
     const addressData = {
       address: "Rue Blanchard",
@@ -107,11 +104,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.logger.debug('ProductListComponent - User Form BehaviorSubject updated : ', form);
     });
 
-    const userList = this.userService.list();
+    // const userList = this.userService.list();
 
-    userList.subscribe(users => {
-      console.log(users);
-    });
+    // userList.subscribe(users => {
+    //   console.log(users);
+    // });
 
   }
 
